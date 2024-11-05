@@ -1,0 +1,117 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Tempo de geração: 05/11/2024 às 02:32
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Banco de dados: `cadastropaciente`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `agendamento_consulta`
+--
+
+CREATE TABLE `agendamento_consulta` (
+  `id` int(11) NOT NULL,
+  `cpf_paciente` varchar(15) NOT NULL,
+  `data_consulta` date NOT NULL,
+  `hora_consulta` time NOT NULL,
+  `especialidade` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `agendamento_consulta`
+--
+
+INSERT INTO `agendamento_consulta` (`id`, `cpf_paciente`, `data_consulta`, `hora_consulta`, `especialidade`) VALUES
+(1, '399.328.388-02', '2024-11-06', '20:50:00', 'exames_sangue');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `cadastro`
+--
+
+CREATE TABLE `cadastro` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `data_nascimento` date NOT NULL,
+  `cpf` varchar(15) NOT NULL,
+  `rg` varchar(15) NOT NULL,
+  `genero` varchar(15) NOT NULL,
+  `tipo_sanguinea` varchar(5) NOT NULL,
+  `endereco` varchar(50) NOT NULL,
+  `telefone` varchar(15) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `cadastro`
+--
+
+INSERT INTO `cadastro` (`id`, `nome`, `data_nascimento`, `cpf`, `rg`, `genero`, `tipo_sanguinea`, `endereco`, `telefone`) VALUES
+(1, 'Gerson Marcel Andres Prado Filho', '2020-10-04', '399.328.388-02', '65454654654', 'masculino', 'O+', 'Rua Aqui', '11979916448');
+
+--
+-- Índices para tabelas despejadas
+--
+
+--
+-- Índices de tabela `agendamento_consulta`
+--
+ALTER TABLE `agendamento_consulta`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_cpf_paciente` (`cpf_paciente`);
+
+--
+-- Índices de tabela `cadastro`
+--
+ALTER TABLE `cadastro`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `cpf` (`cpf`);
+
+--
+-- AUTO_INCREMENT para tabelas despejadas
+--
+
+--
+-- AUTO_INCREMENT de tabela `agendamento_consulta`
+--
+ALTER TABLE `agendamento_consulta`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de tabela `cadastro`
+--
+ALTER TABLE `cadastro`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Restrições para tabelas despejadas
+--
+
+--
+-- Restrições para tabelas `agendamento_consulta`
+--
+ALTER TABLE `agendamento_consulta`
+  ADD CONSTRAINT `fk_cpf_paciente` FOREIGN KEY (`cpf_paciente`) REFERENCES `cadastro` (`cpf`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
